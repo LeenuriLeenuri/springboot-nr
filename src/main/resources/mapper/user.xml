@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nr.springboot.repository.UserRepository">
+
+	<select id="findAll"
+		resultType="com.nr.springboot.model.user.User">
+		select * from user order by id
+		desc
+	</select>
+
+	<insert id="save">
+		insert into user(username, password, email, gender,
+		createDate)
+		values(#{username}, #{password}, #{email},
+		#{gender}, now())
+	</insert>
+
+	<select id="findById"
+		resultType="com.nr.springboot.model.user.User">
+		select id, username, email, gender, profile,
+		createDate
+		from
+		user where id = #{id}
+	</select>
+
+	<select id="findByUsername" resultType="int">
+		select count(*) from user
+		where username = #{username}
+	</select>
+
+	<select id="findByUsernameAndPassword"
+		resultType="com.nr.springboot.model.user.User">
+		select id, username, profile, email from user where
+		username =
+		#{username} and password = #{password}
+	</select>
+
+	<update id="update">
+		update user set password = #{password}, gender =
+		#{gender}, profile = #{profile} where id = #{id}
+	</update>
+
+</mapper>

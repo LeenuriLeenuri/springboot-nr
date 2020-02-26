@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nr.springboot.repository.AnswerRepository">
+
+<select id="findByClientServiceId"
+		resultType="com.nr.springboot.model.answer.dto.RespAnswerDto">
+		select a.id, a.userId, a.clientServiceId, a.content, a.createDate, u.username
+		from answer a inner join user u
+		on a.userId = u.id
+		where a.clientServiceId = #{clientServiceId}
+		order by a.id desc
+	</select>
+
+	<select id="findById"
+		resultType="com.nr.springboot.model.answer.dto.RespAnswerDto">
+		select a.id, a.userId, a.clientServiceId, a.content, a.createDate,
+		u.username
+		from answer a inner join user u
+		on a.userId = u.id
+		where a.id = #{id}
+	</select>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.nr.springboot.model.answer.dto.ReqAnswerDto">
+		insert into answer(userId, clientServiceId, content, createDate)
+		values(#{userId}, #{clientServiceId}, #{content}, now())
+	</insert>
+
+	<delete id="delete">
+		delete from answer where id = #{id}
+	</delete>
+
+</mapper>

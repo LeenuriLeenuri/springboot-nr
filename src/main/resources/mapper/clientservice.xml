@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.nr.springboot.repository.ClientServiceRepository">
+
+	<select id="findAll"
+		resultType="com.nr.springboot.model.clientservice.dto.RespListDto">
+		select c.id, c.title, c.content, c.userId, c.createDate,
+		u.username
+		from clientservice c inner join user u
+		on
+		c.userId = u.id
+		order by c.id desc
+	</select>
+
+	<select id="findById"
+		resultType="com.nr.springboot.model.clientservice.ClientService">
+		select * from clientservice where id =
+		#{id}
+	</select>
+
+	<insert id="save">
+		insert into clientservice(title, content,
+		userId,
+		createDate)
+		values(#{title}, #{content}, #{userId}, now())
+	</insert>
+
+	<update id="update">
+		update clientservice set title = #{title}, content =
+		#{content} where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from clientservice where id = #{id}
+	</delete>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nr.springboot.repository.NewsRepository">
+
+	<select id="findAll"
+		resultType="com.nr.springboot.model.news.dto.RespListDto">
+		select n.id, n.title, n.summary, n.content, n.picture,
+		n.userId, n.createDate, u.username
+		from news n inner join user u
+		on
+		n.userId = u.id
+		order by n.id desc
+	</select>
+
+	<select id="findById"
+		resultType="com.nr.springboot.model.news.News">
+		select * from news where id =
+		#{id}
+	</select>
+
+	<insert id="save">
+		insert into news(title, summary, content, picture,
+		userId, createDate)
+		values(#{title}, #{summary}, #{content},
+		#{picture}, #{userId}, now())
+	</insert>
+
+	<update id="update">
+		update news set title = #{title}, summary=#{summary},
+		content = #{content}, picture = #{picture} where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from news where id = #{id}
+	</delete>
+
+</mapper>
